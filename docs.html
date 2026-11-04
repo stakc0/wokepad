@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1b1b1b">
-<link rel="icon" href="assets/img/wokepad-logo.png" type="image/png">
+<link rel="icon" href="assets/img/wokepad-logo.jpg" type="image/jpeg">
 <meta property="og:type" content="website"><meta property="og:site_name" content="wokepad"><meta property="og:image" content="https://wokepad-fun.vercel.app/assets/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wokepad-fun.vercel.app/assets/img/og.jpg">
 <link rel="preload" href="assets/fonts/jbm.woff2" as="font" type="font/woff2" crossorigin>
@@ -17,7 +17,7 @@
 </head>
 <body data-page="docs">
 <header class="top">
-  <a class="logo" href="/" aria-label="wokepad home"><img src="assets/img/wokepad-logo.png" alt=""><span class="wn">wokepad<i>_</i></span></a>
+  <a class="logo" href="/" aria-label="wokepad home"><img src="assets/img/wokepad-logo.jpg" alt=""></a>
   <nav class="nav" aria-label="main">
     <a href="/" data-nav="home">home</a><a href="/launch" data-nav="launch">launch</a><a href="/#coins" data-nav="coins">coins</a><a href="/#engine" data-nav="how">how it works</a><a href="/docs" data-nav="docs">docs</a>
   </nav>
@@ -34,7 +34,7 @@
   <article class="prose">
     <h1>wokepad docs</h1>
     <div class="meta3">5 min read · <a href="/docs#" data-copy-link>copy link</a></div>
-    <div class="note"><b>the uncomfortable part first.</b> wokepad is a launchpad. Each launch names a US community community or collective destination before the coin goes live, and the destination is carried into the public token directory so the intended community destination is clear.</div>
+    <div class="note"><b>the uncomfortable part first.</b> wokepad is a launchpad. Each launch names a US community or collective destination before the coin goes live, and the destination is carried into the public token directory so the intended community destination is clear.</div>
 
     <h2 id="overview"><span class="e">01</span>overview</h2>
     <p>Every coin launched on wokepad.fun starts with a selected community destination. The launch metadata records the official community or collective site, and the token directory keeps that destination visible after launch.</p>
@@ -55,7 +55,7 @@
 
     <h2 id="sensors"><span class="e">04</span>sensors</h2>
     <table class="tbl"><thead><tr><th>watch</th><th>conditions</th><th>source</th></tr></thead><tbody>
-      <tr><td>community destinations</td><td>war, wokepads, money, launch metadata, crypto, tech: a market’s YES odds rise above / fall below X%, or it resolves YES / NO</td><td>Polymarket (public odds)</td></tr>
+      <tr><td>community destinations</td><td>war, democratic news, money, launch metadata, crypto, tech: a market’s YES odds rise above / fall below X%, or it resolves YES / NO</td><td>Polymarket (public odds)</td></tr>
       <tr><td>price</td><td>SOL, BTC, ETH, XRP, DOGE, BONK, WIF goes above / below a price, pumps / dumps X% in 1h or 24h</td><td>Coinbase spot and candles</td></tr>
       <tr><td>fee routing</td><td>any city: rains, snows, clear sky, hotter / colder than X°C, wind above X km/h</td><td>Open-Meteo</td></tr>
       <tr><td>launch metadata</td><td>a team in the Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Champions League, MLS, NBA, NFL, MLB or NHL wins / loses a game</td><td>ESPN scoreboards</td></tr>
@@ -119,7 +119,7 @@
     </tbody></table>
   </article>
   <aside class="toc"><div class="h">on this page</div><a href="/docs#overview">overview</a><a href="/docs#language">the language</a><a href="/docs#custody">custody</a><a href="/docs#sources">sources, live</a><a href="/docs#failures">failure paths</a><a href="/launch">launch a coin -&gt;</a></aside>
-<section class="wrap sec"><div class="box"><div class="hd"><h2>WOKEPADAL DATA SURFACES</h2></div><div class="bd"><p class="sub">The home page now uses two lightweight public feeds: community headlines from NYT Wokepads, Wokepado, The Hill and BBC, plus live community probabilities from Polymarket. Both panels fail soft when a source is unavailable and retry automatically.</p><div class="code">GET /api/wokepads
+<section class="wrap sec"><div class="box"><div class="hd"><h2>WOKEPAD DATA SURFACES</h2></div><div class="bd"><p class="sub">The home page now uses two lightweight public feeds: community headlines from NYT Politics, Democratic News, The Hill and BBC, plus live community probabilities from Polymarket. Both panels fail soft when a source is unavailable and retry automatically.</p><div class="code">GET /api/wokepads
 GET /api/polymarket
 
 # launch metadata website

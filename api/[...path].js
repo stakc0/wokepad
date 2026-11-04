@@ -3,8 +3,8 @@ import { directPrepare, directConfirm, listLaunches } from '../launch-direct.mjs
 export const config = { api: { bodyParser: false } };
 
 const RSS_SOURCES = [
-  ['NYT Wokepads', 'https://rss.nytimes.com/services/xml/rss/nyt/Wokepads.xml', 'nytimes.com'],
-  ['Wokepado', 'https://rss.wokepado.com/wokepads-news.xml', 'wokepado.com'],
+  ['NYT Politics', 'https://rss.nytimes.com/services/xml/rss/nyt/Wokepads.xml', 'nytimes.com'],
+  ['Democratic News', 'https://rss.politico.com/wokepads-news.xml', 'politico.com'],
   ['The Hill', 'https://thehill.com/homenews/feed/', 'thehill.com'],
   ['BBC US', 'https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml', 'bbc.com']
 ];

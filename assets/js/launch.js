@@ -9,13 +9,10 @@
   $$('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === 'launch'));
 
   const DESTINATIONS = [
-    ['Democratic Party', 'https://democrats.org', 'D'], ['Republican Party', 'https://gop.com', 'R'],
-    ['Fairshake', 'https://www.fairshakepac.com', 'F'], ['Sentinel Action Fund', 'https://sentinelactionfund.com', 'S'],
-    ['Protect Progress', 'https://protectprogresspac.com', 'P'], ['Future Forward', 'https://futureforwardusa.org', 'F'],
-    ['NRCC', 'https://www.nrcc.org', 'N'], ['Defend American Jobs', 'https://defendamericanjobs.com', 'D'],
-    ['America PAC', 'https://theamericapac.org', 'A'], ['American Blockchain PAC', 'https://americanblockchainpac.org', 'B'],
-    ['End Citizens United', 'https://endcitizensunited.org', 'E'], ['Club for Growth', 'https://clubforgrowth.org', 'C'],
-    ['Working Families Party', 'https://workingfamilies.org', 'W'], ['Libertarian Party', 'https://lp.org', 'L']
+    ['Democratic Party', 'https://democrats.org', 'D'], ['Democratic National Committee', 'https://democrats.org', 'D'],
+    ['Democratic Governors Association', 'https://democraticgovernors.org', 'D'], ['DSCC', 'https://dscc.org', 'S'],
+    ['DCCC', 'https://dccc.org', 'C'], ['Working Families Party', 'https://workingfamilies.org', 'W'],
+    ['Indivisible', 'https://indivisible.org', 'I'], ['Sunrise Movement', 'https://www.sunrisemovement.org', 'S']
   ];
   $('#partyGrid').innerHTML = DESTINATIONS.map(([name,site,mark]) => `<button class="br sm party" type="button" data-site="${site}" title="${name}"><img src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(site)}&sz=64" alt=""> ${name}</button>`).join('');
   $('#partyGrid').addEventListener('click', e => { const b=e.target.closest('[data-site]'); if(!b)return; $('#fWeb').value=b.dataset.site; $$('#partyGrid [data-site]').forEach(x=>x.classList.toggle('on',x===b)); toast('Destination set: '+b.title); });
