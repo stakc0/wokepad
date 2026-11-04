@@ -193,7 +193,7 @@
   const close = () => { loader.classList.add('exit'); document.body.classList.remove('entry-pending'); setTimeout(() => loader.remove(), 500); };
   video.addEventListener('ended', close, { once: true });
   video.addEventListener('error', close, { once: true });
-  skip?.addEventListener('click', close);
+  loader.addEventListener('click', close);
   video.play().catch(() => {});
 })();
 </script>
