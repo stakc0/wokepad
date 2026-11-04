@@ -1,11 +1,11 @@
-/* politic launcher: political destination → first buy → Pump V2 coin */
+/* wokepad launcher: community destination → first buy → Pump V2 coin */
 (function () {
   const { $, $$, esc, api, post, toast, copy, short } = WRLD;
   const WR = window.WR;
   // Keep the cost panel available while the direct Pump V2 flow prepares the wallet transactions.
   // This page used CFG without defining it, so costs() threw during startup and no launch handler was attached.
   const CFG = { createSol: 0.03, reserveSol: 0.015 };
-  WRLD.typePrompt($('#prompt'), 'launch a coin, fees routed to a political destination'); WRLD.tape(); WRLD.nudge();
+  WRLD.typePrompt($('#prompt'), 'launch a coin, fees routed to a community destination'); WRLD.tape(); WRLD.nudge();
   $$('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === 'launch'));
 
   const DESTINATIONS = [
@@ -91,7 +91,7 @@
   }
   function done(d) {
     clearInterval(poll); try { localStorage.removeItem('wrld:launch'); } catch {}
-    $('#dep').innerHTML = `<div class="msg ok"><b>$${esc(d.symbol)} is live.</b> its political destination is public.<div class="cta" style="margin-top:10px"><a class="btn" href="/coin?m=${esc(d.mint)}">open the coin <span class="k">-&gt;</span></a>
+    $('#dep').innerHTML = `<div class="msg ok"><b>$${esc(d.symbol)} is live.</b> its community destination is public.<div class="cta" style="margin-top:10px"><a class="btn" href="/coin?m=${esc(d.mint)}">open the coin <span class="k">-&gt;</span></a>
       <a class="br" href="https://pump.fun/coin/${esc(d.mint)}" target="_blank" rel="noopener">pump.fun</a>${d.create_sig ? `<a class="br" href="${WRLD.tx(d.create_sig)}" target="_blank" rel="noopener">creation tx</a>` : ''}</div></div>`;
   }
   async function check() {
@@ -110,11 +110,15 @@
 
   $('#go').addEventListener('click', async e => {
     err('');
-    const name = $('#fName').value.trim(), symbol = $('#fSym').value.trim().replace(/^\$/, '').toUpperCase(), domainSite = $('#fWeb').value.trim();
+    const name = $('#fName').value.trim(), symbol = $('#fSym').value.trim().replace(/^\$/, '').toUpperCase(), description = $('#fDesc').value.trim(), pronouns = $('#fPronouns').value.trim(), domainSite = $('#fWeb').value.trim();
     if (!name) return err('Give the coin a name.');
     if (!/^[A-Z0-9]{1,10}$/.test(symbol)) return err('The ticker is 1–10 letters or numbers.');
     if (!IMG) return err('Add a picture for the coin.');
-    if (!/^https:\/\//i.test(domainSite)) return err('Choose a political destination or paste its HTTPS site link.');
+    if (!description) return err('Give the coin a description.');
+    if (!pronouns) return err('Add the token pronouns.');
+    if (!/^https:\/\//i.test(domainSite)) return err('Choose a community values site or paste its HTTPS link.');
+    if (!$('#fConsent').checked) return err('Consent to launching the coin before continuing.');
+    if (!$('#fLand').checked) return err('Acknowledge the rightful Indigenous owners of the land before continuing.');
     const b = e.currentTarget;
     b.disabled = true; b.textContent = 'connect wallet…';
     const w = WRLD.wallet() || await WRLD.connect();
@@ -122,13 +126,13 @@
     b.textContent = 'preparing…'; $('#flow').hidden = false; $('#dep').innerHTML = '<div class="msg">uploading metadata and preparing the two Pump V2 transactions…</div>';
     try {
       const image = await (await fetch(IMG)).blob(); const body = new FormData();
-      body.set('launch', JSON.stringify({ wallet:w.pk, name, symbol, description:$('#fDesc').value.trim(), domainUrl:domainSite, initialBuySol:String($('#fDev').value) }));
+      body.set('launch', JSON.stringify({ wallet:w.pk, name, symbol, description, pronouns, consent:true, landAcknowledgment:true, domainUrl:domainSite, initialBuySol:String($('#fDev').value) }));
       body.set('file', image, 'token.jpg'); const prepared = await fetch('/api/deploy', { method:'POST', body }).then(async r => { const raw = await r.text(); let j; try { j = JSON.parse(raw); } catch { throw Error(raw.slice(0, 180) || 'Launch preparation returned an invalid response.'); } if(!r.ok) throw Error(j.error||'Launch preparation failed.'); return j; });
       const steps = prepared.transactions || [{ phase:'single', transaction:prepared.transaction }];
       if (!steps[0]?.transaction) throw Error('No Pump V2 transaction was prepared.');
       if (!window.solanaWeb3) await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://unpkg.com/@solana/web3.js@1.98.2/lib/index.iife.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s);});
       for (const step of steps) { const tx=window.solanaWeb3.VersionedTransaction.deserialize(Uint8Array.from(atob(step.transaction),c=>c.charCodeAt(0))); $('#dep').innerHTML=`<div class="msg">approve ${step.phase==='buy'?'the initial buy':'the token creation'} in your wallet…</div>`; if(!w.p.signTransaction) throw Error('This wallet cannot sign the launch transaction.'); const signed=await w.p.signTransaction(tx); const encoded=btoa(String.fromCharCode(...signed.serialize())); const confirmed=await fetch('/api/deploy-confirm',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({intentId:prepared.intentId,phase:step.phase,transaction:encoded})}).then(async r=>{const raw=await r.text();let j;try{j=JSON.parse(raw);}catch{throw Error(raw.slice(0,180)||'Launch confirmation returned an invalid response.');}if(!r.ok)throw Error(j.error||'Launch confirmation failed.');return j;}); if(confirmed.status!=='confirmed') throw Error('Launch is still confirming.'); }
-      $('#dep').innerHTML=`<div class="msg ok"><b>$${esc(symbol)} is live.</b><div class="cta" style="margin-top:10px"><a class="btn" href="/${esc(prepared.mint)}">open the political token page <span class="k">-&gt;</span></a><a class="br" href="https://pump.fun/coin/${esc(prepared.mint)}" target="_blank" rel="noopener">pump.fun</a></div><div style="margin-top:10px;font-size:12px">destination site: ${esc(domainSite)}<br>metadata: https://politic.fun/${esc(prepared.mint)}</div></div>`; toast('Political destination launch confirmed');
+      $('#dep').innerHTML=`<div class="msg ok"><b>$${esc(symbol)} is live.</b><div class="cta" style="margin-top:10px"><a class="btn" href="/${esc(prepared.mint)}">open the community token page <span class="k">-&gt;</span></a><a class="br" href="https://pump.fun/coin/${esc(prepared.mint)}" target="_blank" rel="noopener">pump.fun</a></div><div style="margin-top:10px;font-size:12px">destination site: ${esc(domainSite)}<br>metadata: https://wokepad.fun/${esc(prepared.mint)}</div></div>`; toast('Wokepadal destination launch confirmed');
     } catch (ex) { err(ex.message || 'Launch failed.'); $('#dep').innerHTML = `<div class="msg"><span class="red">${esc(ex.message || 'Launch failed.')}</span></div>`; } finally { b.disabled = false; b.innerHTML = 'launch <span class="k">-&gt;</span>'; }
   });
 })();

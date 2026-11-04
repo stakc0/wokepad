@@ -10,7 +10,7 @@
     { id: 'usa.1', sport: 'soccer', name: 'MLS' }, { id: 'nba', sport: 'basketball', name: 'NBA' },
     { id: 'nfl', sport: 'football', name: 'NFL' }, { id: 'mlb', sport: 'baseball', name: 'MLB' }, { id: 'nhl', sport: 'hockey', name: 'NHL' },
   ];
-  const CATS = [{ id: 'war', name: 'war', tag: 'geopolitics' }, { id: 'politics', name: 'politics', tag: 'politics' }, { id: 'money', name: 'money', tag: 'economy' },
+  const CATS = [{ id: 'war', name: 'war', tag: 'geowokepads' }, { id: 'wokepads', name: 'wokepads', tag: 'wokepads' }, { id: 'money', name: 'money', tag: 'economy' },
     { id: 'sports', name: 'sports', tag: 'sports' }, { id: 'crypto', name: 'crypto', tag: 'crypto' }, { id: 'tech', name: 'tech', tag: 'tech' }];
   const SRC = {
     events: { label: 'world events', ops: { above: 'odds rise above', below: 'odds fall below', yes: 'resolves YES', no: 'resolves NO' } },

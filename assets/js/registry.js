@@ -1,4 +1,4 @@
-/* politic registry: independent fallback renderer for the home coin list */
+/* wokepad registry: independent fallback renderer for the home coin list */
 (function () {
   const esc = value => String(value == null ? '' : value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const money = value => { const n = Number(value || 0); return n >= 1e9 ? '$' + (n / 1e9).toFixed(2) + 'B' : n >= 1e6 ? '$' + (n / 1e6).toFixed(2) + 'M' : n >= 1e3 ? '$' + Math.round(n / 1e3) + 'K' : n ? '$' + n.toFixed(2) : '—'; };
@@ -14,7 +14,7 @@
     box.innerHTML = `<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>coin</th><th>market cap</th><th>volume 24h</th><th>price</th></tr></thead><tbody>${coins.map(c => `<tr><td><a class="coin" href="/${esc(c.mint)}"><img src="${esc(image(c))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"><span><b>$${esc(c.symbol)}</b><span class="rl">${esc(c.name)}</span></span></a></td><td>${money(c.marketCapUsd)}</td><td>${money(c.volume24hUsd)}</td><td>${c.priceUsd ? '$' + Number(c.priceUsd).toPrecision(4) : '—'}</td></tr>`).join('')}</tbody></table></div>`;
   };
   async function load() {
-    const key = 'politic:registry:v1';
+    const key = 'wokepad:registry:v1';
     try { const cached = JSON.parse(localStorage.getItem(key) || 'null'); if (cached && Date.now() - cached.at < 60000) render(cached.data); } catch {}
     try {
       const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 8000);

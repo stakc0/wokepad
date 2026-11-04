@@ -29,11 +29,11 @@
   // ---------- the tape: live readings + the engine's latest actions ----------
   async function tape() {
     const el = $('#tape .in'); if (!el) return;
-    const [p, l] = await Promise.all([api('/api/politics'), api('/api/coins?op=log')]);
+    const [p, l] = await Promise.all([api('/api/wokepads'), api('/api/coins?op=log')]);
     const items = [];
     if (p && p.ok) for (const n of (p.items || []).slice(0, 8)) items.push(`<span class="it"><b>${esc(n.source)}</b> ${esc(n.title)}</span>`);
     if (l && l.ok) for (const e of (l.log || []).slice(0, 6)) items.push(`<span class="it"><span class="ar">+&gt;</span> <b>$${esc(e.symbol)}</b> ${esc(e.text.replace(/^rule \d+ fired: /, '').slice(0, 90))}</span>`);
-    if (!items.length) { el.innerHTML = '<span class="it off">political news is offline right now · retrying</span><span class="sep">//</span>'.repeat(2); setTimeout(tape, 20000); return; }
+    if (!items.length) { el.innerHTML = '<span class="it off">community news is offline right now · retrying</span><span class="sep">//</span>'.repeat(2); setTimeout(tape, 20000); return; }
     const one = items.join('<span class="sep">//</span>') + '<span class="sep">//</span>'; el.innerHTML = one + one; el.style.animationDuration = Math.max(40, items.length * 6) + 's';
   }
 
@@ -341,8 +341,8 @@
   // the official-token strip (both states)
   function caStrip(el) {
     if (!el) return;
-    if (CONFIG.ca) el.innerHTML = `<span class="k">$POLITIC</span><code>${esc(CONFIG.ca)}</code><span class="r"><a class="br sm" href="#" data-copy="${esc(CONFIG.ca)}" data-what="Contract copied">copy</a><a class="br sm" href="https://pump.fun/coin/${esc(CONFIG.ca)}" target="_blank" rel="noopener">pump.fun</a>${CONFIG.x ? `<a class="br sm" href="${esc(CONFIG.x)}" target="_blank" rel="noopener">x</a>` : ''}</span><span></span><span class="dim">anything else posted as $POLITIC is not ours.</span>`;
-    else el.innerHTML = `<span class="k">$POLITIC</span><span>The token doesn’t exist yet. Anyone posting a contract address before it appears here is not us.</span>`;
+    if (CONFIG.ca) el.innerHTML = `<span class="k">$WOKEPAD</span><code>${esc(CONFIG.ca)}</code><span class="r"><a class="br sm" href="#" data-copy="${esc(CONFIG.ca)}" data-what="Contract copied">copy</a><a class="br sm" href="https://pump.fun/coin/${esc(CONFIG.ca)}" target="_blank" rel="noopener">pump.fun</a>${CONFIG.x ? `<a class="br sm" href="${esc(CONFIG.x)}" target="_blank" rel="noopener">x</a>` : ''}</span><span></span><span class="dim">anything else posted as $WOKEPAD is not ours.</span>`;
+    else el.innerHTML = `<span class="k">$WOKEPAD</span><span>The token doesn’t exist yet. Anyone posting a contract address before it appears here is not us.</span>`;
   }
 
   api('/api/launch?op=config').then(c => { if (c && c.xApi) window.WRLD_XPOSTS = true; });

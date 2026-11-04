@@ -3,16 +3,16 @@ import { directPrepare, directConfirm, listLaunches } from '../launch-direct.mjs
 export const config = { api: { bodyParser: false } };
 
 const RSS_SOURCES = [
-  ['NYT Politics', 'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml', 'nytimes.com'],
-  ['Politico', 'https://rss.politico.com/politics-news.xml', 'politico.com'],
+  ['NYT Wokepads', 'https://rss.nytimes.com/services/xml/rss/nyt/Wokepads.xml', 'nytimes.com'],
+  ['Wokepado', 'https://rss.wokepado.com/wokepads-news.xml', 'wokepado.com'],
   ['The Hill', 'https://thehill.com/homenews/feed/', 'thehill.com'],
   ['BBC US', 'https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml', 'bbc.com']
 ];
 function stripTags(value = '') { return String(value).replace(/<!\[CDATA\[|\]\]>/g, '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim(); }
 function xmlTag(item, tag) { return stripTags((item.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)</${tag}>`, 'i')) || [])[1] || ''); }
-async function politicsNews() {
+async function wokepadsNews() {
   const settled = await Promise.allSettled(RSS_SOURCES.map(async ([source, url, domain]) => {
-    const r = await fetch(url, { headers: { 'user-agent': 'politic.fun/1.0' }, signal: AbortSignal.timeout(7000) });
+    const r = await fetch(url, { headers: { 'user-agent': 'wokepad.fun/1.0' }, signal: AbortSignal.timeout(7000) });
     if (!r.ok) throw new Error(`${source} returned ${r.status}`);
     const xml = await r.text();
     return [...xml.matchAll(/<item[\s\S]*?<\/item>/gi)].slice(0, 6).map(item => ({ source, domain, title: xmlTag(item[0], 'title'), url: xmlTag(item[0], 'link'), published: xmlTag(item[0], 'pubDate') })).filter(x => x.title && x.url);
@@ -20,8 +20,8 @@ async function politicsNews() {
   const items = settled.flatMap(x => x.status === 'fulfilled' ? x.value : []).sort((a, b) => new Date(b.published) - new Date(a.published)).slice(0, 12);
   return { ok: items.length > 0, at: Date.now(), items, sources: settled.filter(x => x.status === 'fulfilled').length };
 }
-async function politicalMarkets() {
-  const r = await fetch('https://gamma-api.polymarket.com/events?active=true&closed=false&limit=60&order=volume24hr&ascending=false&tag_slug=politics', { headers: { accept: 'application/json', 'user-agent': 'politic.fun/1.0', origin: 'https://polymarket.com' }, signal: AbortSignal.timeout(8000) });
+async function communityMarkets() {
+  const r = await fetch('https://gamma-api.polymarket.com/events?active=true&closed=false&limit=60&order=volume24hr&ascending=false&tag_slug=wokepads', { headers: { accept: 'application/json', 'user-agent': 'wokepad.fun/1.0', origin: 'https://polymarket.com' }, signal: AbortSignal.timeout(8000) });
   if (!r.ok) throw new Error(`Polymarket returned ${r.status}`);
   const events = await r.json(), markets = [];
   for (const event of Array.isArray(events) ? events : []) for (const market of (event.markets || []).slice(0, 3)) {
@@ -43,7 +43,7 @@ async function tokenMarkets() {
   const tokens = await Promise.all(rows.slice(0, 100).map(async row => {
     let market = {};
     try {
-      const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${encodeURIComponent(row.mint)}`, { headers: { accept: 'application/json', 'user-agent': 'politic.fun/1.0' }, signal: AbortSignal.timeout(6000) });
+      const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${encodeURIComponent(row.mint)}`, { headers: { accept: 'application/json', 'user-agent': 'wokepad.fun/1.0' }, signal: AbortSignal.timeout(6000) });
       const j = await r.json();
       const pairs = (j.pairs || []).filter(x => x.chainId === 'solana').sort((a, b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
       const pair = pairs[0];
@@ -82,8 +82,8 @@ export default async function handler(req, res) {
       return res.status(200).json(await directConfirm(body));
     }
     if (path === 'tokens' && req.method === 'GET') { res.setHeader('cache-control', 'public, s-maxage=15, stale-while-revalidate=60'); return res.status(200).json({ ok: true, at: Date.now(), creatorFeeWallet: CREATOR_FEE_WALLET, tokens: await listedTokens() }); }
-    if (path === 'politics' && req.method === 'GET') return res.status(200).json(await politicsNews());
-    if (path === 'polymarket' && req.method === 'GET') return res.status(200).json(await politicalMarkets());
+    if (path === 'wokepads' && req.method === 'GET') return res.status(200).json(await wokepadsNews());
+    if (path === 'polymarket' && req.method === 'GET') return res.status(200).json(await communityMarkets());
     if (!['world', 'coins', 'launch', 'tick'].includes(path)) return res.status(404).json({ ok: false, error: 'Not found' });
     const target = new URL(`https://www.wrlddo.trade/api/${path}`);
     for (const [key, value] of Object.entries(req.query)) if (key !== 'path' && value != null) target.searchParams.set(key, Array.isArray(value) ? value[0] : value);

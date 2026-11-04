@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1b1b1b">
-<link rel="icon" href="assets/img/politic-logo.png" type="image/png">
-<meta property="og:type" content="website"><meta property="og:site_name" content="politic"><meta property="og:image" content="https://politic-fun.vercel.app/assets/img/og.jpg">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://politic-fun.vercel.app/assets/img/og.jpg">
+<link rel="icon" href="assets/img/wokepad-logo.png" type="image/png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="wokepad"><meta property="og:image" content="https://wokepad-fun.vercel.app/assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wokepad-fun.vercel.app/assets/img/og.jpg">
 <link rel="preload" href="assets/fonts/jbm.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/w.css">
-<script>window.WRLD_CONFIG = { ca: 'GwmnNWdeEXKrHxpocAMUWDmFdZvPq5d8vsgiNeuupump', x: 'https://x.com/politicfunx' };</script>
+<script>window.WRLD_CONFIG = { ca: '4yshPumHvDRVoVt3M84hBcYGLxir2vJnKNWtjDeFpump', x: 'https://x.com/wokepadfunx' };</script>
 
-<title>politic · docs</title>
-<meta name="description" content="How politic works: the rulebook language, the sensors, the engine, custody, costs and failure paths.">
-<meta property="og:title" content="politic · docs">
+<title>wokepad · docs</title>
+<meta name="description" content="How wokepad works: the rulebook language, the sensors, the engine, custody, costs and failure paths.">
+<meta property="og:title" content="wokepad · docs">
 </head>
 <body data-page="docs">
 <header class="top">
-  <a class="logo" href="/" aria-label="politic home"><img src="assets/img/politic-logo.png" alt=""><span class="wn">politic<i>_</i></span></a>
+  <a class="logo" href="/" aria-label="wokepad home"><img src="assets/img/wokepad-logo.png" alt=""><span class="wn">wokepad<i>_</i></span></a>
   <nav class="nav" aria-label="main">
     <a href="/" data-nav="home">home</a><a href="/launch" data-nav="launch">launch</a><a href="/#coins" data-nav="coins">coins</a><a href="/#engine" data-nav="how">how it works</a><a href="/docs" data-nav="docs">docs</a>
   </nav>
@@ -32,22 +32,22 @@
     <div class="h">engine</div><a href="/docs#custody">custody</a><a href="/docs#fees">fees and the chest</a><a href="/docs#sources">sources, live</a><a href="/docs#failures">failure paths</a><a href="/docs#api">api</a>
   </nav>
   <article class="prose">
-    <h1>politic docs</h1>
+    <h1>wokepad docs</h1>
     <div class="meta3">5 min read · <a href="/docs#" data-copy-link>copy link</a></div>
-    <div class="note"><b>the uncomfortable part first.</b> politic is a launchpad. Each launch names a US political party or PAC destination before the coin goes live, and the destination is carried into the public token directory so the intended political destination is clear.</div>
+    <div class="note"><b>the uncomfortable part first.</b> wokepad is a launchpad. Each launch names a US community community or collective destination before the coin goes live, and the destination is carried into the public token directory so the intended community destination is clear.</div>
 
     <h2 id="overview"><span class="e">01</span>overview</h2>
-    <p>Every coin launched on politic.fun starts with a selected political destination. The launch metadata records the official party or PAC site, and the token directory keeps that destination visible after launch.</p>
+    <p>Every coin launched on wokepad.fun starts with a selected community destination. The launch metadata records the official community or collective site, and the token directory keeps that destination visible after launch.</p>
 
     <h2 id="launching"><span class="e">02</span>launching</h2>
     <ul>
       <li>You fill in the coin (name, ticker, picture), write the rulebook and choose a first buy.</li>
-      <li>politic records it, derives the coin’s wallet and its mint address, and tells you one amount to send.</li>
+      <li>wokepad records it, derives the coin’s wallet and its mint address, and tells you one amount to send.</li>
       <li>You send that one SOL transfer. No program approvals and no other signature.</li>
       <li>The engine creates the coin on pump.fun from the coin’s wallet with your first buy, then sends the tokens and any unused SOL to your wallet.</li>
-      <li>From that moment the selected political destination is part of the coin’s public identity.</li>
+      <li>From that moment the selected community destination is part of the coin’s public identity.</li>
     </ul>
-    <table class="costs" style="max-width:520px"><tr><td>first buy</td><td>your choice, 0.01–10 SOL (+2% for fees)</td></tr><tr><td>pump.fun rent and fees</td><td>about 0.03 SOL, the unused part comes back</td></tr><tr><td>gas reserve, kept in the coin’s wallet</td><td>0.015 SOL</td></tr><tr><td>politic’s cut</td><td>nothing at launch; 5% of each fee claim</td></tr></table>
+    <table class="costs" style="max-width:520px"><tr><td>first buy</td><td>your choice, 0.01–10 SOL (+2% for fees)</td></tr><tr><td>pump.fun rent and fees</td><td>about 0.03 SOL, the unused part comes back</td></tr><tr><td>gas reserve, kept in the coin’s wallet</td><td>0.015 SOL</td></tr><tr><td>wokepad’s cut</td><td>nothing at launch; 5% of each fee claim</td></tr></table>
 
     <h2 id="language"><span class="e">03</span>the language</h2>
     <p>Rules are stored as data and shown as one line each. The fingerprint is the first 12 hex characters of the SHA-256 of the rulebook’s canonical JSON. It is written into the coin’s pump.fun description at launch, so anyone can check the rulebook on the coin’s page against it.</p>
@@ -55,7 +55,7 @@
 
     <h2 id="sensors"><span class="e">04</span>sensors</h2>
     <table class="tbl"><thead><tr><th>watch</th><th>conditions</th><th>source</th></tr></thead><tbody>
-      <tr><td>political destinations</td><td>war, politics, money, launch metadata, crypto, tech: a market’s YES odds rise above / fall below X%, or it resolves YES / NO</td><td>Polymarket (public odds)</td></tr>
+      <tr><td>community destinations</td><td>war, wokepads, money, launch metadata, crypto, tech: a market’s YES odds rise above / fall below X%, or it resolves YES / NO</td><td>Polymarket (public odds)</td></tr>
       <tr><td>price</td><td>SOL, BTC, ETH, XRP, DOGE, BONK, WIF goes above / below a price, pumps / dumps X% in 1h or 24h</td><td>Coinbase spot and candles</td></tr>
       <tr><td>fee routing</td><td>any city: rains, snows, clear sky, hotter / colder than X°C, wind above X km/h</td><td>Open-Meteo</td></tr>
       <tr><td>launch metadata</td><td>a team in the Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Champions League, MLS, NBA, NFL, MLB or NHL wins / loses a game</td><td>ESPN scoreboards</td></tr>
@@ -83,15 +83,15 @@
     </ul>
 
     <h2 id="custody"><span class="e">07</span>custody</h2>
-    <p>Each launch records its selected political destination alongside the coin metadata. Wallet and mint handling remain part of the existing Solana launch infrastructure.</p>
+    <p>Each launch records its selected community destination alongside the coin metadata. Wallet and mint handling remain part of the existing Solana launch infrastructure.</p>
     <ul>
-      <li>The engine’s code has four spending actions, the four above, plus the launch hand-back, refunds and politic’s 5%.</li>
+      <li>The engine’s code has four spending actions, the four above, plus the launch hand-back, refunds and wokepad’s 5%.</li>
       <li>You can audit every one: the coin’s wallet is public, and each action appears in the coin’s log with its transaction.</li>
       <li>What you are trusting: that the engine keeps running, and that the master secret stays secret. If either fails, rules stop firing; the fees stay in the coin’s wallet.</li>
     </ul>
 
     <h2 id="fees"><span class="e">08</span>fees and the chest</h2>
-    <p>When at least 0.003 SOL of creator fees is waiting, the engine claims it into the coin’s wallet. politic takes 5% of each claim. The rest, minus a 0.015 SOL gas reserve, is the chest that rules spend from. Swaps go through PumpPortal’s local transaction API, which adds its own 0.5% to each trade.</p>
+    <p>When at least 0.003 SOL of creator fees is waiting, the engine claims it into the coin’s wallet. wokepad takes 5% of each claim. The rest, minus a 0.015 SOL gas reserve, is the chest that rules spend from. Swaps go through PumpPortal’s local transaction API, which adds its own 0.5% to each trade.</p>
 
     <h2 id="sources"><span class="e">09</span>sources, live</h2>
     <p>Each row times a real read from the server right now.</p>
@@ -119,14 +119,14 @@
     </tbody></table>
   </article>
   <aside class="toc"><div class="h">on this page</div><a href="/docs#overview">overview</a><a href="/docs#language">the language</a><a href="/docs#custody">custody</a><a href="/docs#sources">sources, live</a><a href="/docs#failures">failure paths</a><a href="/launch">launch a coin -&gt;</a></aside>
-<section class="wrap sec"><div class="box"><div class="hd"><h2>POLITICAL DATA SURFACES</h2></div><div class="bd"><p class="sub">The home page now uses two lightweight public feeds: political headlines from NYT Politics, Politico, The Hill and BBC, plus live political probabilities from Polymarket. Both panels fail soft when a source is unavailable and retry automatically.</p><div class="code">GET /api/politics
+<section class="wrap sec"><div class="box"><div class="hd"><h2>WOKEPADAL DATA SURFACES</h2></div><div class="bd"><p class="sub">The home page now uses two lightweight public feeds: community headlines from NYT Wokepads, Wokepado, The Hill and BBC, plus live community probabilities from Polymarket. Both panels fail soft when a source is unavailable and retry automatically.</p><div class="code">GET /api/wokepads
 GET /api/polymarket
 
 # launch metadata website
-https://politic.fun/&lt;mint&gt;
+https://wokepad.fun/&lt;mint&gt;
 
 # canonical social
-https://x.com/politicfunx</div></div></div></section>
+https://x.com/wokepadfunx</div></div></div></section>
 </main>
 <div style="height:60px"></div>
 <script src="assets/js/rules.js"></script>
