@@ -109,7 +109,7 @@
     err('');
     const name = $('#fName').value.trim(), symbol = $('#fSym').value.trim().replace(/^\$/, '').toUpperCase(), description = $('#fDesc').value.trim(), pronouns = $('#fPronouns').value.trim(), domainSite = $('#fWeb').value.trim();
     if (!name) return err('Give the coin a name.');
-    if (!/^[A-Z0-9]{1,10}$/.test(symbol)) return err('The ticker is 1–10 letters or numbers.');
+    if (symbol !== 'WOKE') return err('This launchpad only launches $WOKE.');
     if (!IMG) return err('Add a picture for the coin.');
     if (!description) return err('Give the coin a description.');
     if (!pronouns) return err('Add the token pronouns.');

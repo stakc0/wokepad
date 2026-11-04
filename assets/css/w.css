@@ -2,7 +2,7 @@
 @font-face { font-family: 'JBM'; src: url('../fonts/jbm.woff2') format('woff2'); font-weight: 100 800; font-display: swap; }
 :root {
   --paper: #f6f3ec; --paper2: #efebe1; --grid: #d0c8b9; --ink: #1d3934; --ink2: #34504a; --mid: #5b6762; --mute: #7d8984; --pale: #b5c2bd; --line: #c9cfc6;
-  --green: #4fbf7c; --green2: #2f8f6e; --green3: #1f7a58; --violet: #6a55c9; --burn: #c2470e; --hold: #1a64c2; --air: #0b7a6a; --crea: #966000; --chest: #c2307a; --red: #b42318;
+  --green: #4fbf7c; --green2: #2f8f6e; --green3: #1f7a58; --violet: #6a55c9; --burn: #c2470e; --hold: #1a64c2; --air: #0b7a6a; --crea: #966000; --chest: #c2307a; --red: #b42318; --rainbow: linear-gradient(90deg,#ef4444,#f59e0b,#facc15,#22c55e,#3b82f6,#a855f7);
   --gut: 32px; --w: 1120px;
 }
 * { box-sizing: border-box; }
@@ -85,7 +85,7 @@ b, strong { font-weight: 700; }
 
 /* ---------- sections: dashed boxes with a # heading, like a terminal pane ---------- */
 .sec { padding-top: 34px; padding-bottom: 6px; scroll-margin-top: 10px; }
-.box { border: 1px dashed var(--pale); background: rgba(246, 243, 236, .72); }
+.box { border: 1px dashed var(--pale); border-top: 3px solid transparent; border-image: var(--rainbow) 1; background: rgba(246, 243, 236, .72); }
 .box > .hd { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px dashed var(--pale); }
 .box > .hd h2 { margin: 0; font-size: 13.5px; font-weight: 800; letter-spacing: .02em; }
 .box > .hd h2::before { content: '# '; color: var(--green2); }

@@ -47,7 +47,7 @@ export async function directPrepare(req) {
   const budgetText=String(body.initialBuySol||'0.05'); if(!/^(?:\d+)(?:\.\d{1,9})?$/.test(budgetText)) fail('Initial buy must be a SOL amount.');
   const budgetLamports = BigInt(Math.round(Number(budgetText)*1e9)); if(budgetLamports<50_000_000n || !Number.isSafeInteger(Number(budgetLamports))) fail('Initial buy must be at least 0.05 SOL.');
   const publicDescription = `${description}\n\nToken pronouns: ${pronouns}`;
-  if(!name || new TextEncoder().encode(name).length>32 || !/^[A-Z0-9]{2,10}$/.test(symbol) || !description || publicDescription.length>2000) fail('Invalid name, ticker, pronouns, or description.');
+  if(!name || new TextEncoder().encode(name).length>32 || symbol !== 'WOKE' || !description || publicDescription.length>2000) fail('This launchpad only launches $WOKE with valid metadata.');
   const rpc=process.env.PUMP_RPC_URL||process.env.LOOT_RPC_URL||'https://api.mainnet-beta.solana.com'; const connection=new Connection(rpc,'confirmed');
   const online=new OnlinePumpSdk(connection); const [global,feeConfig]=await Promise.all([online.fetchGlobal(),online.fetchFeeConfig()]);
   const creatorFeeBps = new BN(global.creatorFeeBasisPoints.toString());
