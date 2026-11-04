@@ -14,8 +14,9 @@
 <title>wokepad</title>
 <meta name="description" content="Launch pump.fun coins and choose which US community or collective receives the community destination.">
 <meta property="og:title" content="wokepad.fun · launch with a destination"><meta property="og:description" content="A community launchpad where every coin declares its community or collective destination.">
-<style>#live,#events,#try,#rulebooks,#fired,#engine,#faq,#wokepads,#odds{display:none!important}.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.dest-grid a{display:grid;grid-template-columns:28px 1fr;gap:4px 10px;padding:16px;background:var(--paper);font-weight:700}.dest-grid a:hover{background:var(--paper2)}.dest-grid img{width:24px;height:24px;grid-row:span 2;object-fit:contain;filter:grayscale(1)}.dest-grid span{font-size:11px;color:var(--mid);font-weight:400}@media(max-width:700px){.dest-grid{grid-template-columns:1fr}}</style></head>
-<body data-page="home">
+<style>#live,#events,#try,#rulebooks,#fired,#engine,#faq,#wokepads,#odds{display:none!important}.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.dest-grid a{display:grid;grid-template-columns:28px 1fr;gap:4px 10px;padding:16px;background:var(--paper);font-weight:700}.dest-grid a:hover{background:var(--paper2)}.dest-grid img{width:24px;height:24px;grid-row:span 2;object-fit:contain;filter:grayscale(1)}.dest-grid span{font-size:11px;color:var(--mid);font-weight:400}@media(max-width:700px){.dest-grid{grid-template-columns:1fr}}body.entry-pending>header,body.entry-pending>main,body.entry-pending>.tape{visibility:hidden}#entry-loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#090909;transition:opacity .45s ease}#entry-loader.exit{opacity:0;pointer-events:none}#entry-loader video{width:100%;height:100%;object-fit:cover}#entry-loader .entry-skip{position:absolute;right:22px;bottom:18px;border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.35);color:#fff;padding:8px 12px;font:700 11px monospace;cursor:pointer}</style></head>
+<body data-page="home" class="entry-pending">
+<div id="entry-loader" aria-label="Wokepad intro"><video id="entry-video" autoplay muted playsinline preload="auto"><source src="/assets/video/wokepad-entry.mp4" type="video/mp4"></video><button class="entry-skip" type="button">enter WOKE</button></div>
 <header class="top">
   <a class="logo" href="/" aria-label="wokepad home"><img src="assets/img/wokepad-logo.png" alt=""></a>
   <nav class="nav" aria-label="main">
@@ -53,7 +54,7 @@
     <div class="ca" id="ca"></div>
   </div>
   <div class="globe route-card" aria-label="wokepad visual" oncontextmenu="return false">
-    <div class="video-frame"><video autoplay muted loop playsinline preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture oncontextmenu="return false"><source src="/assets/video/wokepad-loop.mp4" type="video/mp4"></video></div>
+    <div class="video-frame"><video autoplay muted loop playsinline preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture oncontextmenu="return false"><source src="/assets/video/wokepad-entry.mp4" type="video/mp4"></video></div>
   </div>
 </section>
 
@@ -185,6 +186,17 @@
 <script src="assets/js/core.js"></script>
 <script src="assets/js/home.js"></script>
 <script src="assets/js/registry.js"></script>
+<script>
+(() => {
+  const loader = document.querySelector('#entry-loader'), video = document.querySelector('#entry-video'), skip = loader?.querySelector('.entry-skip');
+  if (!loader || !video) return;
+  const close = () => { loader.classList.add('exit'); document.body.classList.remove('entry-pending'); setTimeout(() => loader.remove(), 500); };
+  video.addEventListener('ended', close, { once: true });
+  video.addEventListener('error', close, { once: true });
+  skip?.addEventListener('click', close);
+  video.play().catch(() => {});
+})();
+</script>
 
 </body>
 </html>
